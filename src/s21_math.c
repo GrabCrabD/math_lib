@@ -6,7 +6,7 @@ long double s21_fabs(double x) { return (x < 0) ? -x : x; }
 
 long double s21_fmod(double x, double y) {
   double result;
-  int n;
+  long long int n;
   n = x / y;
   result = x - n * y;
   return result;
@@ -127,7 +127,7 @@ long double s21_cos(double x) {
   if (s21_fabs(x) < s21_EPS) {
     answer = 1.;
   } else {
-    for (long double i = 1.; s21_fabs(member) > s21_EPS && i < 50; i++) {
+    for (int i = 1; s21_fabs(member) > s21_EPS && i < 50; i++) {
       member *= ((-1.) * x * x / (2. * i * (2. * i - 1.)));
       answer += member;
     }
@@ -143,7 +143,7 @@ long double s21_sin(double x) {
   if (s21_fabs(x) < s21_EPS) {
     answer = 0.;
   } else {
-    for (long double i = 1.; s21_fabs(member) > s21_EPS && i < 50; i++) {
+    for (int i = 1; s21_fabs(member) > s21_EPS && i < 50; i++) {
       member *= ((-1.) * x * x / (2. * i * (2. * i + 1.)));
       answer += member;
     }
@@ -176,7 +176,7 @@ long double s21_log(double x) {
     result = s21_INF;
   } else {
     for (; y >= s21_E; y /= s21_E, ex_pow++) continue;
-    for (double i = 0; i < 100; i++) {
+    for (int i = 0; i < 100; i++) {
       compare = result;
 
       result = compare + 2 * (y - s21_exp(compare)) / (y + s21_exp(compare));
