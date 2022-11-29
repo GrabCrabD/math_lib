@@ -142,6 +142,8 @@ START_TEST(test_exp) {
   ck_assert_double_nan(s21_exp(s21_NAN));
   ck_assert_double_eq_tol(exp(-45.4567893), s21_exp(-45.4567893), 1e-6);
   ck_assert_double_eq_tol(exp(-341), s21_exp(-341), 1e-6);
+  ck_assert_double_eq_tol(exp(45.4567893), s21_exp(45.4567893), 1e-6);
+  ck_assert_double_eq_tol(exp(71), s21_exp(71), 1e-6);
   for (double i = -20; i < 20; i += 0.1)
     ck_assert_ldouble_eq_tol(s21_exp(i), exp(i), 1e-6);
 }
@@ -162,9 +164,11 @@ START_TEST(test_sin) {
   ck_assert_double_nan(s21_sin(s21_INF));
   ck_assert_double_nan(s21_sin(-s21_INF));
   ck_assert_double_nan(s21_sin(s21_NAN));
-  for (double i = -1; i <= 1; i += 0.001) {
+  for (double i = -100; i <= 100; i += 0.001) {
     ck_assert_ldouble_eq_tol(sin(i), s21_sin(i), 1e-6);
   }
+  ck_assert_double_eq_tol(sin(-3456.3453), s21_sin(-3456.3453), 1e-6);
+  ck_assert_double_eq_tol(sin(36456.8774678), s21_sin(36456.8774678), 1e-6);
 }
 END_TEST
 
@@ -183,30 +187,35 @@ START_TEST(test_cos) {
   ck_assert_double_nan(s21_cos(s21_INF));
   ck_assert_double_nan(s21_cos(-s21_INF));
   ck_assert_double_nan(s21_cos(s21_NAN));
-  for (double i = -1; i <= 1; i += 0.001) {
+  for (double i = -100; i <= 100; i += 0.001) {
     ck_assert_ldouble_eq_tol(cos(i), s21_cos(i), 1e-6);
   }
+  ck_assert_double_eq_tol(cos(-3456.3453), s21_cos(-3456.3453), 1e-6);
+  ck_assert_double_eq_tol(cos(3656.468), s21_cos(3656.468), 1e-6);
 }
 END_TEST
 
 START_TEST(test_tan) {
   ck_assert_double_eq_tol(tan(0), s21_tan(0), 1e-6);
   ck_assert_double_eq_tol(tan(1), s21_tan(1), 1e-6);
-  ck_assert_double_eq_tol(tan(30 * s21_PI / 180), s21_tan(30 * s21_PI / 180),
-                          1e-6);
-  ck_assert_double_eq_tol(tan(60 * s21_PI / 360), s21_tan(60 * s21_PI / 360),
-                          1e-6);
-  ck_assert_double_eq_tol(tan(-s21_PI / 360), s21_tan(-s21_PI / 360), 1e-6);
+  ck_assert_double_eq_tol(tan(s21_PI / 3), s21_tan(s21_PI / 3), 1e-6);
+  ck_assert_double_eq_tol(tan(s21_PI / 4), s21_tan(s21_PI / 4), 1e-6);
   ck_assert_double_eq_tol(tan(s21_PI / 6), s21_tan(s21_PI / 6), 1e-6);
+  ck_assert_double_eq_tol(tan(-s21_PI / 3), s21_tan(-s21_PI / 3), 1e-6);
+  ck_assert_double_eq_tol(tan(-s21_PI / 4), s21_tan(-s21_PI / 4), 1e-6);
+  ck_assert_double_eq_tol(tan(-s21_PI / 6), s21_tan(-s21_PI / 6), 1e-6);
+  ck_assert_double_eq_tol(tan(-s21_PI / 360), s21_tan(-s21_PI / 360), 1e-6);
   ck_assert_double_eq_tol(tan(s21_TWO_PI), s21_tan(s21_TWO_PI), 1e-6);
   ck_assert_double_eq_tol(tan(1e-6), s21_tan(1e-6), 1e-6);
   ck_assert_double_eq_tol(tan(-1e-6), s21_tan(-1e-6), 1e-6);
   ck_assert_double_nan(s21_tan(s21_INF));
   ck_assert_double_nan(s21_tan(-s21_INF));
   ck_assert_double_nan(s21_tan(s21_NAN));
-  for (double i = -1; i <= 1; i += 0.001) {
+  for (double i = -100; i <= 100; i += 0.01) {
     ck_assert_ldouble_eq_tol(tan(i), s21_tan(i), 1e-6);
   }
+  ck_assert_double_eq_tol(tan(-3456.3453), s21_tan(-3456.3453), 1e-6);
+  ck_assert_double_eq_tol(tan(36456.8774678), s21_tan(36456.8774678), 1e-6);
 }
 END_TEST
 

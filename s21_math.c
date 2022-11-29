@@ -1,7 +1,5 @@
 #include "s21_math.h"
 
-#include <stdio.h>
-
 int s21_abs(int x) { return (x < 0) ? -x : x; }
 
 long double s21_fabs(double x) { return (x < 0) ? -x : x; }
@@ -103,19 +101,19 @@ long double s21_exp(double x) {
     res *= x / i;
     i += 1;
     temp += res;
-    if (temp > 1e20) {
+    if (temp > s21_LDBL_MAX * s21_LDBL_MAX) {
       temp = s21_INF;
       break;
     }
   }
   if (flag == 1) {
-    if (temp > 1e20) {
+    if (temp > s21_LDBL_MAX) {
       temp = 0;
     } else {
       temp = 1. / temp;
     }
   }
-  if (temp > 1e20) {
+  if (temp > s21_LDBL_MAX) {
     temp = s21_INF;
   }
   return temp;
@@ -127,7 +125,7 @@ long double s21_cos(double x) {
   member = 1;
   answer = 1;
   if (s21_fabs(x) < s21_EPS) {
-    answer = 0.;
+    answer = 1.;
   } else {
     for (long double i = 1.; s21_fabs(member) > s21_EPS && i < 50; i++) {
       member *= ((-1.) * x * x / (2. * i * (2. * i - 1.)));
@@ -159,7 +157,7 @@ long double s21_tan(double x) {
   if (x == 0) {
     answer = 0;
   } else {
-    answer = sin(x) / cos(x);
+    answer = s21_sin(x) / s21_cos(x);
   }
   return answer;
 }
@@ -170,10 +168,19 @@ long double s21_log(double x) {
   long double compare = 0;
   long double y = x;
 
-  for (; y >= s21_E; y /= s21_E, ex_pow++) continue;
-  for (double i = 0; i < 100; i++) {
-    compare = result;
-    result = compare + 2 * (y - s21_exp(compare)) / (y + s21_exp(compare));
+  if (x == 0) {
+    result = -s21_INF;
+  } else if (x < 0) {
+    result = -s21_NAN;
+  } else if (x == s21_INF) {
+    result = s21_INF;
+  } else {
+    for (; y >= s21_E; y /= s21_E, ex_pow++) continue;
+    for (double i = 0; i < 100; i++) {
+      compare = result;
+
+      result = compare + 2 * (y - s21_exp(compare)) / (y + s21_exp(compare));
+    }
   }
   return (result + ex_pow);
 }
